@@ -185,10 +185,11 @@
     border: 2px solid #aab8c8;
     border-radius: 3px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; color: #2e6da4;
+    font-size: 10px; color: transparent;
     flex-shrink: 0;
     transition: all 0.15s;
   }
+  .check-item .box::after { content: '✓'; }
   .check-item.checked .box {
     background: #2e6da4;
     border-color: #2e6da4;
@@ -334,10 +335,11 @@
     border: 2px solid #aab8c8;
     border-radius: 4px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
+    font-size: 11px; color: transparent;
     flex-shrink: 0;
     transition: all 0.15s;
   }
+  .doc-box::after { content: '✓'; }
   .doc-item.checked .doc-box {
     background: #3a9a5c;
     border-color: #3a9a5c;
@@ -555,8 +557,8 @@
         <input type="text" id="titulo_propiedad" name="titulo_propiedad" placeholder="Ej: Apartamento en Torre Bella Vista, Santiago">
       </div>
       <div class="field">
-        <label class="field-label" for="referencia_id">Referencia / ID</label>
-        <input type="text" id="referencia_id" name="referencia_id" placeholder="NSI-2026-001" oninput="document.getElementById('refNum').textContent = this.value || '_____'">
+        <label class="field-label" for="referencia_id">Referencia / ID (Automático)</label>
+        <input type="text" id="referencia_id" name="referencia_id" readonly style="background-color: #e8ecf2; color: #5a6a7a; font-weight: 600; cursor: not-allowed; border-color: #d0dae6;" title="Generado automáticamente">
       </div>
       <div class="field">
         <label class="field-label">Precio de Venta</label>
@@ -752,19 +754,19 @@
     <div class="section-title"><span>📁</span> 7. Control Interno — Documentos</div>
     <div class="doc-list" data-group="documentos">
       <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Título de Propiedad"><div class="doc-box">✓</div> Título de Propiedad
+        <input type="checkbox" name="documentos" value="Título de Propiedad"><div class="doc-box"></div> Título de Propiedad
       </label>
       <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="IPI al Día"><div class="doc-box">✓</div> IPI al Día
+        <input type="checkbox" name="documentos" value="IPI al Día"><div class="doc-box"></div> IPI al Día
       </label>
       <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Planos"><div class="doc-box">✓</div> Planos
+        <input type="checkbox" name="documentos" value="Planos"><div class="doc-box"></div> Planos
       </label>
       <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Régimen de Condominio"><div class="doc-box">✓</div> Régimen de Condominio
+        <input type="checkbox" name="documentos" value="Régimen de Condominio"><div class="doc-box"></div> Régimen de Condominio
       </label>
       <label class="doc-item na-item" onclick="toggleDocNa(this)">
-        <input type="checkbox" name="documentos" value="N/A"><div class="doc-box">✓</div> N/A
+        <input type="checkbox" name="documentos" value="N/A"><div class="doc-box"></div> N/A
       </label>
     </div>
     <div class="field" style="margin-top:12px;">
@@ -794,10 +796,31 @@
 
 <script>
   // ============================
-  // FECHA
+  // FECHA Y REFERENCIA AUTOMÁTICA
   // ============================
   const hoy = new Date();
   document.getElementById('fechaHoy').textContent = hoy.toLocaleDateString('es-DO', {day:'2-digit', month:'long', year:'numeric'});
+
+  function generarReferencia() {
+    const fecha = new Date();
+    const año = fecha.getFullYear().toString().slice(-2);
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let randomChars = '';
+    for (let i = 0; i < 4; i++) {
+      randomChars += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    const ref = `NSI-${año}${mes}-${randomChars}`;
+    document.getElementById('referencia_id').value = ref;
+    document.getElementById('refNum').textContent = ref;
+  }
+
+  function limpiarReferencia() {
+    document.getElementById('referencia_id').value = 'Se asignará al guardar';
+    document.getElementById('refNum').textContent = '_____';
+  }
+  
+  limpiarReferencia();
 
   // ============================
   // GOOGLE SHEETS URL CONFIG
@@ -944,7 +967,7 @@
       if (radio) radio.checked = false;
     });
     
-    document.getElementById('refNum').textContent = '_____';
+    limpiarReferencia();
     showToast('Formulario limpiado correctamente', 'info');
   }
 
@@ -1002,15 +1025,12 @@
     btn.classList.add('loading');
     btn.disabled = true;
 
-    const data = collectFormData();
-
-    // Validate at least reference
-    if (!data.referencia_id) {
-      showToast('⚠️ Ingresa al menos la Referencia / ID de la propiedad', 'error');
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      return;
+    // Generar la referencia justo antes de guardar si aún no tiene una
+    if (document.getElementById('referencia_id').value === 'Se asignará al guardar') {
+      generarReferencia();
     }
+
+    const data = collectFormData();
 
     try {
       const response = await fetch(GOOGLE_SHEETS_URL, {
@@ -1053,7 +1073,7 @@
       const radio = i.querySelector('input[type="radio"]');
       if (radio) radio.checked = false;
     });
-    document.getElementById('refNum').textContent = '_____';
+    limpiarReferencia();
   }
 
   // ============================
