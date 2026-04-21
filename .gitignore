@@ -1,0 +1,9 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Fotos grandes (no subir a GitHub)
+Fotos Casa Los Rios/
+
+# Node modules (si aplica)
+node_modules/

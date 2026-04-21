@@ -1,0 +1,241 @@
+{
+  "company": {
+    "name": "Nuevo Sol Inversiones",
+    "tagline": "Tu futuro comienza con una inversión inteligente",
+    "phone": "+1 (809) 697-2050",
+    "whatsapp": "18096972050",
+    "email": "info@nuevosolinversiones.com",
+    "address": "Santo Domingo, República Dominicana",
+    "city": "Santo Domingo",
+    "country": "República Dominicana",
+    "social": {
+      "instagram": "https://instagram.com/nuevosolinversiones",
+      "facebook": "https://facebook.com/nuevosolinversiones",
+      "youtube": "https://youtube.com/@nuevosolinversiones"
+    }
+  },
+  "properties": [
+    {
+      "id": "casa-los-rios",
+      "title": "Residencia Premium Los Ríos",
+      "slug": "residencia-premium-los-rios",
+      "type": "Casa",
+      "category": "luxury",
+      "badge": "Destacada",
+      "price": 485000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Los Ríos",
+        "city": "Santo Domingo",
+        "province": "Distrito Nacional"
+      },
+      "features": {
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "area_m2": 320,
+        "parking": 2,
+        "floors": 2,
+        "year_built": 2024
+      },
+      "amenities": ["Piscina", "Terraza", "Jardín", "Área BBQ", "Seguridad 24/7", "Cuarto de servicio", "Walking closet", "Cocina moderna"],
+      "description": "Espectacular residencia de diseño contemporáneo en el exclusivo sector de Los Ríos. Esta propiedad ofrece acabados de primera clase, amplios espacios iluminados con luz natural y una distribución pensada para el máximo confort familiar. Disfruta de una piscina privada, terraza panorámica y jardín tropical en una de las zonas más prestigiosas de Santo Domingo.",
+      "description_short": "Residencia contemporánea de lujo con piscina y jardín en Los Ríos.",
+      "images": [
+        "assets/images/properties/NKN_0006_800.jpg",
+        "assets/images/properties/NKN_0010_800.jpg",
+        "assets/images/properties/NKN_0014_800.jpg",
+        "assets/images/properties/NKN_0020_800.jpg",
+        "assets/images/properties/NKN_0040_800.jpg",
+        "assets/images/properties/NKN_0050_800.jpg",
+        "assets/images/properties/NKN_0060_800.jpg",
+        "assets/images/properties/NKN_0080_800.jpg",
+        "assets/images/properties/NKN_0100_800.jpg",
+        "assets/images/properties/NKN_0120_800.jpg",
+        "assets/images/properties/NKN_0147_800.jpg",
+        "assets/images/properties/NKN_0165_800.jpg",
+        "assets/images/properties/NKN_0180_800.jpg",
+        "assets/images/properties/NKN_0190_800.jpg",
+        "assets/images/properties/NKN_0199_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0006_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0006_400.jpg",
+      "featured": true,
+      "status": "available"
+    },
+    {
+      "id": "apartamento-piantini",
+      "title": "Apartamento Moderno Piantini",
+      "slug": "apartamento-moderno-piantini",
+      "type": "Apartamento",
+      "category": "luxury",
+      "badge": "Nuevo",
+      "price": 295000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Piantini",
+        "city": "Santo Domingo",
+        "province": "Distrito Nacional"
+      },
+      "features": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "area_m2": 185,
+        "parking": 2,
+        "floors": 1,
+        "year_built": 2025
+      },
+      "amenities": ["Gimnasio", "Lobby", "Ascensor", "Seguridad 24/7", "Balcón", "Área social"],
+      "description": "Moderno apartamento en torre de lujo en Piantini, una de las zonas más exclusivas de Santo Domingo. Acabados premium, vista panorámica de la ciudad y acceso a amenidades de primer nivel.",
+      "description_short": "Apartamento de lujo con vista panorámica en Piantini.",
+      "images": [
+        "assets/images/properties/NKN_0050_800.jpg",
+        "assets/images/properties/NKN_0060_800.jpg",
+        "assets/images/properties/NKN_0080_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0050_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0050_400.jpg",
+      "featured": true,
+      "status": "available"
+    },
+    {
+      "id": "proyecto-los-alcarrizos",
+      "title": "Casas Económicas Los Alcarrizos",
+      "slug": "casas-economicas-los-alcarrizos",
+      "type": "Casa",
+      "category": "lowcost",
+      "badge": "Económica",
+      "price": 65000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Los Alcarrizos",
+        "city": "Santo Domingo",
+        "province": "Santo Domingo Oeste"
+      },
+      "features": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "area_m2": 110,
+        "parking": 1,
+        "floors": 1,
+        "year_built": 2025
+      },
+      "amenities": ["Patio", "Parqueo", "Área verde", "Seguridad"],
+      "description": "Proyecto de casas accesibles con financiamiento directo. Diseño moderno y funcional en una comunidad planificada con áreas verdes y seguridad. La oportunidad perfecta para tu primera inversión inmobiliaria.",
+      "description_short": "Casas económicas con financiamiento directo en Los Alcarrizos.",
+      "images": [
+        "assets/images/properties/NKN_0100_800.jpg",
+        "assets/images/properties/NKN_0120_800.jpg",
+        "assets/images/properties/NKN_0147_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0100_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0100_400.jpg",
+      "featured": true,
+      "status": "available"
+    },
+    {
+      "id": "penthouse-naco",
+      "title": "Penthouse Exclusivo Naco",
+      "slug": "penthouse-exclusivo-naco",
+      "type": "Penthouse",
+      "category": "luxury",
+      "badge": "Lujo",
+      "price": 650000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Naco",
+        "city": "Santo Domingo",
+        "province": "Distrito Nacional"
+      },
+      "features": {
+        "bedrooms": 4,
+        "bathrooms": 4,
+        "area_m2": 420,
+        "parking": 3,
+        "floors": 2,
+        "year_built": 2024
+      },
+      "amenities": ["Jacuzzi", "Terraza privada", "Vista 360°", "Home cinema", "Gimnasio privado", "Smart home"],
+      "description": "Penthouse de ultra-lujo con terraza privada y vista 360° de la ciudad. Sistema domótico inteligente, acabados importados y el máximo nivel de exclusividad en el corazón de Naco.",
+      "description_short": "Penthouse de ultra-lujo con vista 360° en Naco.",
+      "images": [
+        "assets/images/properties/NKN_0165_800.jpg",
+        "assets/images/properties/NKN_0180_800.jpg",
+        "assets/images/properties/NKN_0190_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0165_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0165_400.jpg",
+      "featured": true,
+      "status": "available"
+    },
+    {
+      "id": "villa-juan-dolio",
+      "title": "Villa Frente al Mar Juan Dolio",
+      "slug": "villa-frente-mar-juan-dolio",
+      "type": "Villa",
+      "category": "luxury",
+      "badge": "Destacada",
+      "price": 890000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Juan Dolio",
+        "city": "San Pedro de Macorís",
+        "province": "San Pedro de Macorís"
+      },
+      "features": {
+        "bedrooms": 5,
+        "bathrooms": 4,
+        "area_m2": 550,
+        "parking": 3,
+        "floors": 2,
+        "year_built": 2023
+      },
+      "amenities": ["Piscina infinity", "Acceso directo a playa", "Muelle privado", "Terraza", "Jardín tropical", "Seguridad 24/7"],
+      "description": "Villa de ensueño frente al mar Caribe en Juan Dolio. Piscina infinity con vista al océano, acceso directo a playa privada y arquitectura que fusiona lujo tropical con diseño contemporáneo.",
+      "description_short": "Villa de lujo frente al mar con piscina infinity en Juan Dolio.",
+      "images": [
+        "assets/images/properties/NKN_0014_800.jpg",
+        "assets/images/properties/NKN_0020_800.jpg",
+        "assets/images/properties/NKN_0199_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0014_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0014_400.jpg",
+      "featured": true,
+      "status": "available"
+    },
+    {
+      "id": "apartamento-santo-domingo-este",
+      "title": "Apartamento Familiar SD Este",
+      "slug": "apartamento-familiar-sd-este",
+      "type": "Apartamento",
+      "category": "lowcost",
+      "badge": "Económica",
+      "price": 78000,
+      "currency": "USD",
+      "location": {
+        "neighborhood": "Santo Domingo Este",
+        "city": "Santo Domingo",
+        "province": "Santo Domingo Este"
+      },
+      "features": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "area_m2": 95,
+        "parking": 1,
+        "floors": 1,
+        "year_built": 2025
+      },
+      "amenities": ["Balcón", "Área de juegos", "Seguridad", "Ascensor", "Área social"],
+      "description": "Apartamento ideal para familias con excelente relación precio-calidad. Ubicación estratégica con acceso a centros comerciales, escuelas y transporte público.",
+      "description_short": "Apartamento accesible ideal para familias en SD Este.",
+      "images": [
+        "assets/images/properties/NKN_0080_800.jpg",
+        "assets/images/properties/NKN_0060_800.jpg",
+        "assets/images/properties/NKN_0040_800.jpg"
+      ],
+      "hero_image": "assets/images/properties/NKN_0080_1920.jpg",
+      "thumbnail": "assets/images/properties/NKN_0080_400.jpg",
+      "featured": false,
+      "status": "available"
+    }
+  ]
+}
