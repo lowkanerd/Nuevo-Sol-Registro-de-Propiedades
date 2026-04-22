@@ -42,6 +42,8 @@
 //    Z1: Descripción Web
 //    AA1: Documentos Disponibles
 //    AB1: Notas Internas
+//    AC1: Cuarto de Servicio (Cant.)
+//    AD1: Jacuzzi (Cant.)
 //
 // 4. En la hoja "Config", pon:
 //    A1: Versión      B1: 1.0
@@ -107,7 +109,7 @@ function doPost(e) {
       data.nivel_piso || '',            // K: Nivel/Piso
       data.habitaciones || '',          // L: Habitaciones
       data.banos || '',                 // M: Baños
-      data.medio_bano || '',            // N: Medio Baño
+      data.medios_banos || data.medio_bano || '', // N: Medio Baño (ahora es cantidad)
       data.parqueos_cantidad || '',     // O: Parqueos Cantidad
       data.tipo_parqueos || '',         // P: Tipo Parqueos
       data.espacios_incluidos || '',    // Q: Espacios Incluidos
@@ -121,7 +123,9 @@ function doPost(e) {
       data.fecha_entrega || '',         // Y: Fecha Entrega
       data.descripcion_web || '',       // Z: Descripción Web
       data.documentos || '',            // AA: Documentos Disponibles
-      data.notas_internas || ''         // AB: Notas Internas
+      data.notas_internas || '',        // AB: Notas Internas
+      data.cuarto_servicio || '',       // AC: Cuarto de Servicio (Cant.)
+      data.cantidad_jacuzzi || ''       // AD: Jacuzzi (Cant.)
     ]);
     
     // Actualizar Config con último registro
@@ -165,7 +169,7 @@ function addHeaders(sheet) {
     'Tipo Parqueos', 'Espacios Incluidos', 'Terminaciones', 'Áreas Sociales',
     'Servicios Edificio', 'Costo Mantenimiento', 'Reserva', 'Separación',
     'Cuotas Obra', 'Fecha Entrega', 'Descripción Web', 'Documentos Disponibles',
-    'Notas Internas'
+    'Notas Internas', 'Cuarto de Servicio (Cant.)', 'Jacuzzi (Cant.)'
   ];
   
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);

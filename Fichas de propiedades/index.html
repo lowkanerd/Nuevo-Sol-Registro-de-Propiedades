@@ -18,7 +18,8 @@
   }
 
   .page {
-    max-width: 820px;
+    max-width: 1000px; /* Mejorado para TV y Laptops */
+    width: 100%;
     margin: 0 auto;
     background: #fff;
     border-radius: 10px;
@@ -60,33 +61,72 @@
 
   /* SECTIONS */
   .section {
-    padding: 20px 32px;
+    padding: 0;
     border-bottom: 1px solid #e8edf2;
   }
   .section:last-child { border-bottom: none; }
 
   .section-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
     color: #2e6da4;
-    margin-bottom: 14px;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #e0eaf4;
+    padding: 16px 32px;
+    background: #fafbfc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .section-title:hover {
+    background: #f0f4f9;
+  }
+  .section-title-left {
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  .section-title span { font-size: 15px; }
+  .section-title-left span { font-size: 16px; }
+
+  .accordion-icon {
+    font-size: 14px;
+    transition: transform 0.3s;
+    color: #5a6a7a;
+  }
+  
+  .section-content {
+    padding: 0 32px 24px;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+    overflow: hidden;
+    opacity: 1;
+    max-height: 2000px; /* Altura máxima aproximada */
+  }
+  
+  /* Estados colapsados */
+  .section-title.collapsed .accordion-icon {
+    transform: rotate(-90deg);
+  }
+  .section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
 
   /* GRID */
   .grid { display: grid; gap: 12px; }
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .col-span-2 { grid-column: span 2; }
-  .col-span-3 { grid-column: span 3; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  
+  @media (min-width: 768px) {
+    .col-span-2 { grid-column: span 2; }
+    .col-span-3 { grid-column: span 3; }
+  }
 
   /* FIELD */
   .field { display: flex; flex-direction: column; gap: 4px; }
@@ -297,7 +337,7 @@
   /* DOCS CHECKLIST */
   .doc-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 8px;
   }
   .doc-item {
@@ -345,7 +385,6 @@
     border-color: #3a9a5c;
     color: #fff;
   }
-  /* N/A doc item */
   .doc-item.na-item {
     background: #f5f5f5;
     border-color: #ccc;
@@ -483,31 +522,109 @@
     gap: 10px;
   }
   .config-banner .banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .config-banner code {
-    background: rgba(0,0,0,0.08);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    word-break: break-all;
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
   }
-  .config-banner a {
-    color: #856404;
-    font-weight: 600;
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .modal {
+    transform: translateY(0);
+  }
+  .modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0eaf4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #2e6da4;
+  }
+  .modal-body {
+    padding: 20px;
+  }
+  .modal-body textarea {
+    width: 100%;
+    height: 250px;
+    resize: none;
+    border: 1.5px solid #d0dae6;
+    border-radius: 6px;
+    padding: 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+  }
+  .modal-body textarea:focus {
+    border-color: #2e6da4;
+  }
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #5a6a7a;
+  }
+  .close-btn:hover {
+    color: #d9534f;
   }
 
+  /* MEDIA QUERIES (Print & Mobile) */
   @media print {
     body { background: #fff; padding: 0; }
-    .page { box-shadow: none; border-radius: 0; }
-    .actions { display: none; }
-    .config-banner { display: none; }
-    .toast-container { display: none; }
+    .page { box-shadow: none; border-radius: 0; max-width: 100%; }
+    .actions, .config-banner, .toast-container { display: none; }
+    
+    .section { 
+      break-inside: avoid; 
+      border-bottom: 1px solid #ddd;
+    }
+    .section-title { 
+      background: none; 
+      padding: 12px 0; 
+      color: #000;
+    }
+    .section-content { 
+      padding: 0 0 16px; 
+    }
+    .accordion-icon { display: none; } /* Ocultar flechas en impresión */
+    
+    /* Ocultar contenido si la sección estaba colapsada */
+    .section-content.collapsed { display: none !important; }
+    
+    /* Notas Internas en página nueva */
+    #print-notas-internas-section {
+      page-break-before: always;
+    }
   }
 
-  @media (max-width: 600px) {
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  @media (max-width: 768px) {
     .col-span-2, .col-span-3 { grid-column: span 1; }
-    .doc-list { grid-template-columns: 1fr; }
-    .section { padding: 16px; }
+    .section-title, .section-content { padding-left: 16px; padding-right: 16px; }
     .header { flex-direction: column; align-items: flex-start; }
     .header-right { text-align: left; }
     .actions { padding: 12px 16px; }
@@ -550,55 +667,60 @@
 
   <!-- 1. INFORMACIÓN GENERAL -->
   <div class="section">
-    <div class="section-title"><span>📋</span> 1. Información General</div>
-    <div class="grid grid-2">
-      <div class="field col-span-2">
-        <label class="field-label" for="titulo_propiedad">Título de la Propiedad</label>
-        <input type="text" id="titulo_propiedad" name="titulo_propiedad" placeholder="Ej: Apartamento en Torre Bella Vista, Santiago">
-      </div>
-      <div class="field">
-        <label class="field-label" for="referencia_id">Referencia / ID (Automático)</label>
-        <input type="text" id="referencia_id" name="referencia_id" readonly style="background-color: #e8ecf2; color: #5a6a7a; font-weight: 600; cursor: not-allowed; border-color: #d0dae6;" title="Generado automáticamente">
-      </div>
-      <div class="field">
-        <label class="field-label">Precio de Venta</label>
-        <div class="precio-group">
-          <select id="moneda" name="moneda">
-            <option value="USD">USD</option>
-            <option value="DOP">DOP</option>
-          </select>
-          <input type="text" id="precio_venta" name="precio_venta" placeholder="0.00">
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>📋</span> 1. Información General</div>
+      <div class="accordion-icon">▼</div>
+    </div>
+    <div class="section-content">
+      <div class="grid grid-2" style="margin-top: 16px;">
+        <div class="field col-span-2">
+          <label class="field-label" for="titulo_propiedad">Título de la Propiedad</label>
+          <input type="text" id="titulo_propiedad" name="titulo_propiedad" placeholder="Ej: Apartamento en Torre Bella Vista, Santiago">
+        </div>
+        <div class="field">
+          <label class="field-label" for="referencia_id">Referencia / ID (Automático)</label>
+          <input type="text" id="referencia_id" name="referencia_id" readonly style="background-color: #e8ecf2; color: #5a6a7a; font-weight: 600; cursor: not-allowed; border-color: #d0dae6;" title="Generado automáticamente">
+        </div>
+        <div class="field">
+          <label class="field-label">Precio de Venta</label>
+          <div class="precio-group">
+            <select id="moneda" name="moneda">
+              <option value="USD">USD</option>
+              <option value="DOP">DOP</option>
+            </select>
+            <input type="text" id="precio_venta" name="precio_venta" placeholder="0.00">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="sector">Sector</label>
+          <input type="text" id="sector" name="sector" placeholder="Ej: Piantini">
+        </div>
+        <div class="field">
+          <label class="field-label" for="ciudad">Ciudad</label>
+          <input type="text" id="ciudad" name="ciudad" placeholder="Ej: Santo Domingo">
         </div>
       </div>
-      <div class="field">
-        <label class="field-label" for="sector">Sector</label>
-        <input type="text" id="sector" name="sector" placeholder="Ej: Piantini">
-      </div>
-      <div class="field">
-        <label class="field-label" for="ciudad">Ciudad</label>
-        <input type="text" id="ciudad" name="ciudad" placeholder="Ej: Santo Domingo">
-      </div>
-    </div>
-    <div style="margin-top:14px;">
-      <div class="field">
-        <label class="field-label">Estado de la Propiedad</label>
-        <div class="estado-group" id="estadoGroup" data-name="estado_propiedad">
-          <label class="estado-item" onclick="selectRadio(this)">
-            <input type="radio" name="estado_propiedad" value="En Planos">
-            <div class="radio-dot"></div> En Planos
-          </label>
-          <label class="estado-item" onclick="selectRadio(this)">
-            <input type="radio" name="estado_propiedad" value="En Construcción">
-            <div class="radio-dot"></div> En Construcción
-          </label>
-          <label class="estado-item" onclick="selectRadio(this)">
-            <input type="radio" name="estado_propiedad" value="Listo / Reventa">
-            <div class="radio-dot"></div> Listo / Reventa
-          </label>
-          <label class="estado-item na-item" onclick="selectRadio(this)">
-            <input type="radio" name="estado_propiedad" value="N/A">
-            <div class="radio-dot"></div> N/A
-          </label>
+      <div style="margin-top:14px;">
+        <div class="field">
+          <label class="field-label">Estado de la Propiedad</label>
+          <div class="estado-group" id="estadoGroup" data-name="estado_propiedad">
+            <label class="estado-item" onclick="selectRadio(this)">
+              <input type="radio" name="estado_propiedad" value="En Planos">
+              <div class="radio-dot"></div> En Planos
+            </label>
+            <label class="estado-item" onclick="selectRadio(this)">
+              <input type="radio" name="estado_propiedad" value="En Construcción">
+              <div class="radio-dot"></div> En Construcción
+            </label>
+            <label class="estado-item" onclick="selectRadio(this)">
+              <input type="radio" name="estado_propiedad" value="Listo / Reventa">
+              <div class="radio-dot"></div> Listo / Reventa
+            </label>
+            <label class="estado-item na-item" onclick="selectRadio(this)">
+              <input type="radio" name="estado_propiedad" value="N/A">
+              <div class="radio-dot"></div> N/A
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -606,56 +728,45 @@
 
   <!-- 2. CARACTERÍSTICAS -->
   <div class="section">
-    <div class="section-title"><span>🏗️</span> 2. Características del Inmueble</div>
-    <div class="grid grid-3">
-      <div class="field">
-        <label class="field-label" for="metros_construccion">Metros de Construcción (m²)</label>
-        <input type="number" id="metros_construccion" name="metros_construccion" placeholder="0" min="0">
-      </div>
-      <div class="field">
-        <label class="field-label" for="metros_terreno">Metros de Terreno (m²)</label>
-        <input type="number" id="metros_terreno" name="metros_terreno" placeholder="0" min="0">
-      </div>
-      <div class="field">
-        <label class="field-label" for="nivel_piso">Nivel / Piso</label>
-        <input type="text" id="nivel_piso" name="nivel_piso" placeholder="Ej: 3">
-      </div>
-      <div class="field">
-        <label class="field-label" for="habitaciones">Habitaciones</label>
-        <input type="number" id="habitaciones" name="habitaciones" placeholder="0" min="0">
-      </div>
-      <div class="field">
-        <label class="field-label" for="banos">Baños</label>
-        <input type="number" id="banos" name="banos" placeholder="0" min="0">
-      </div>
-      <div class="field">
-        <label class="field-label">Medio Baño</label>
-        <div class="estado-group" style="margin-top:4px;" data-name="medio_bano">
-          <label class="estado-item" onclick="selectRadio(this)" style="min-width:60px">
-            <input type="radio" name="medio_bano" value="Sí">
-            <div class="radio-dot"></div> Sí
-          </label>
-          <label class="estado-item" onclick="selectRadio(this)" style="min-width:60px">
-            <input type="radio" name="medio_bano" value="No">
-            <div class="radio-dot"></div> No
-          </label>
-          <label class="estado-item na-item" onclick="selectRadio(this)" style="min-width:60px">
-            <input type="radio" name="medio_bano" value="N/A">
-            <div class="radio-dot"></div> N/A
-          </label>
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>🏗️</span> 2. Características del Inmueble</div>
+      <div class="accordion-icon">▼</div>
+    </div>
+    <div class="section-content">
+      <div class="grid grid-3" style="margin-top: 16px;">
+        <div class="field">
+          <label class="field-label" for="metros_construccion">Metros de Construcción (m²)</label>
+          <input type="number" id="metros_construccion" name="metros_construccion" placeholder="0" min="0">
         </div>
-      </div>
-      <div class="field">
-        <label class="field-label" for="parqueos_cantidad">Parqueos</label>
-        <input type="number" id="parqueos_cantidad" name="parqueos_cantidad" placeholder="0" min="0">
-      </div>
-      <div class="field col-span-2">
-        <label class="field-label">Tipo de Parqueos</label>
-        <div class="check-group" data-group="tipo_parqueos">
-          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Techados"><div class="box"></div> Techados</label>
-          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Lineales"><div class="box"></div> Lineales</label>
-          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Paralelos"><div class="box"></div> Paralelos</label>
-          <label class="check-item na-item" onclick="toggleNa(this, 'tipo_parqueos')"><input type="checkbox" name="tipo_parqueos" value="N/A"><div class="box"></div> N/A</label>
+        <div class="field">
+          <label class="field-label" for="metros_terreno">Metros de Terreno (m²)</label>
+          <input type="number" id="metros_terreno" name="metros_terreno" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="nivel_piso">Nivel / Piso</label>
+          <input type="text" id="nivel_piso" name="nivel_piso" placeholder="Ej: 3">
+        </div>
+        <div class="field">
+          <label class="field-label" for="habitaciones">Habitaciones</label>
+          <input type="number" id="habitaciones" name="habitaciones" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="banos">Baños</label>
+          <input type="number" id="banos" name="banos" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="parqueos_cantidad">Parqueos</label>
+          <input type="number" id="parqueos_cantidad" name="parqueos_cantidad" placeholder="0" min="0">
+        </div>
+        <div class="field col-span-3">
+          <label class="field-label">Tipo de Parqueos</label>
+          <div class="check-group" data-group="tipo_parqueos">
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Techados"><div class="box"></div> Techados</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="No Techados"><div class="box"></div> No Techados</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Lineales"><div class="box"></div> Lineales</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="tipo_parqueos" value="Paralelos"><div class="box"></div> Paralelos</label>
+            <label class="check-item na-item" onclick="toggleNa(this, 'tipo_parqueos')"><input type="checkbox" name="tipo_parqueos" value="N/A"><div class="box"></div> N/A</label>
+          </div>
         </div>
       </div>
     </div>
@@ -663,115 +774,174 @@
 
   <!-- 3. DISTRIBUCIÓN Y TERMINACIONES -->
   <div class="section">
-    <div class="section-title"><span>🛋️</span> 3. Distribución y Terminaciones</div>
-    <div class="field" style="margin-bottom:12px;">
-      <label class="field-label">Espacios Incluidos</label>
-      <div class="check-group" data-group="espacios_incluidos">
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Sala"><div class="box"></div> Sala</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Comedor"><div class="box"></div> Comedor</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Cocina Fría"><div class="box"></div> Cocina Fría</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Cocina Caliente"><div class="box"></div> Cocina Caliente</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Balcón"><div class="box"></div> Balcón</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Terraza"><div class="box"></div> Terraza</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Estudio"><div class="box"></div> Estudio</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Cuarto de Servicio"><div class="box"></div> Cuarto de Servicio</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Área de Lavado"><div class="box"></div> Área de Lavado</label>
-        <label class="check-item na-item" onclick="toggleNa(this, 'espacios_incluidos')"><input type="checkbox" name="espacios_incluidos" value="N/A"><div class="box"></div> N/A</label>
-      </div>
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>🛋️</span> 3. Distribución y Terminaciones</div>
+      <div class="accordion-icon">▼</div>
     </div>
-    <div class="field">
-      <label class="field-label" for="terminaciones">Descripción de Terminaciones</label>
-      <input type="text" id="terminaciones" name="terminaciones" placeholder="Ej: Pisos en mármol, madera de roble, mesetas en granito">
+    <div class="section-content">
+      <div class="grid grid-2" style="margin-top: 16px; margin-bottom: 12px;">
+        <div class="field">
+          <label class="field-label" for="cuarto_servicio">Cuarto de Servicio (Cantidad)</label>
+          <input type="number" id="cuarto_servicio" name="cuarto_servicio" placeholder="0" min="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="medios_banos">Cantidad de Medios Baños</label>
+          <input type="number" id="medios_banos" name="medios_banos" placeholder="0" min="0">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:12px;">
+        <label class="field-label">Espacios Incluidos</label>
+        <div class="check-group" data-group="espacios_incluidos">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Sala"><div class="box"></div> Sala</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Comedor"><div class="box"></div> Comedor</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Cocina Fría"><div class="box"></div> Cocina Fría</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Cocina Caliente"><div class="box"></div> Cocina Caliente</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Balcón"><div class="box"></div> Balcón</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Terraza"><div class="box"></div> Terraza</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Estudio"><div class="box"></div> Estudio</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="espacios_incluidos" value="Área de Lavado"><div class="box"></div> Área de Lavado</label>
+          <label class="check-item na-item" onclick="toggleNa(this, 'espacios_incluidos')"><input type="checkbox" name="espacios_incluidos" value="N/A"><div class="box"></div> N/A</label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="terminaciones">Descripción de Terminaciones</label>
+        <input type="text" id="terminaciones" name="terminaciones" placeholder="Ej: Pisos en mármol, madera de roble, mesetas en granito">
+      </div>
     </div>
   </div>
 
   <!-- 4. AMENIDADES -->
   <div class="section">
-    <div class="section-title"><span>🌊</span> 4. Amenidades del Proyecto / Edificio</div>
-    <div class="field" style="margin-bottom:12px;">
-      <label class="field-label">Áreas Sociales</label>
-      <div class="check-group" data-group="areas_sociales">
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Piscina"><div class="box"></div> Piscina</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Gimnasio"><div class="box"></div> Gimnasio</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Área Infantil"><div class="box"></div> Área Infantil</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="BBQ"><div class="box"></div> BBQ</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Rooftop"><div class="box"></div> Rooftop</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Cine"><div class="box"></div> Cine</label>
-        <label class="check-item na-item" onclick="toggleNa(this, 'areas_sociales')"><input type="checkbox" name="areas_sociales" value="N/A"><div class="box"></div> N/A</label>
-      </div>
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>🌊</span> 4. Amenidades y Servicios del Proyecto</div>
+      <div class="accordion-icon">▼</div>
     </div>
-    <div class="field">
-      <label class="field-label">Servicios del Edificio</label>
-      <div class="check-group" data-group="servicios_edificio">
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Ascensor"><div class="box"></div> Ascensor</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Planta Eléctrica Full"><div class="box"></div> Planta Eléctrica Full</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Seguridad 24/7"><div class="box"></div> Seguridad 24/7</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Lobby Climatizado"><div class="box"></div> Lobby Climatizado</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Gas Común"><div class="box"></div> Gas Común</label>
-        <label class="check-item na-item" onclick="toggleNa(this, 'servicios_edificio')"><input type="checkbox" name="servicios_edificio" value="N/A"><div class="box"></div> N/A</label>
+    <div class="section-content">
+      <div class="grid grid-2" style="margin-top: 16px; margin-bottom: 12px;">
+        <div class="field">
+          <label class="field-label">Áreas Sociales</label>
+          <div class="check-group" data-group="areas_sociales">
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Piscina"><div class="box"></div> Piscina</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Gimnasio"><div class="box"></div> Gimnasio</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Área Infantil"><div class="box"></div> Área Infantil</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="BBQ"><div class="box"></div> BBQ</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Rooftop"><div class="box"></div> Rooftop</label>
+            <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="areas_sociales" value="Cine"><div class="box"></div> Cine</label>
+            <label class="check-item na-item" onclick="toggleNa(this, 'areas_sociales')"><input type="checkbox" name="areas_sociales" value="N/A"><div class="box"></div> N/A</label>
+          </div>
+        </div>
+        <div class="field" style="max-width: 250px;">
+          <label class="field-label" for="cantidad_jacuzzi">Jacuzzi (Cantidad)</label>
+          <input type="number" id="cantidad_jacuzzi" name="cantidad_jacuzzi" placeholder="0" min="0">
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Servicios del Edificio/Casa</label>
+        <div class="check-group" data-group="servicios_edificio">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Ascensor"><div class="box"></div> Ascensor</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Planta Eléctrica Full"><div class="box"></div> Planta Eléctrica Full</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Seguridad 24/7"><div class="box"></div> Seguridad 24/7</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Sistemas de cámara de seguridad"><div class="box"></div> Cámaras de Seguridad</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Intercom"><div class="box"></div> Intercom</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Lobby Climatizado"><div class="box"></div> Lobby Climatizado</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" name="servicios_edificio" value="Gas Común"><div class="box"></div> Gas Común</label>
+          <label class="check-item na-item" onclick="toggleNa(this, 'servicios_edificio')"><input type="checkbox" name="servicios_edificio" value="N/A"><div class="box"></div> N/A</label>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 5. DATOS DE INVERSIÓN -->
   <div class="section">
-    <div class="section-title"><span>💰</span> 5. Datos de Inversión y Pagos</div>
-    <div class="grid grid-2">
-      <div class="field">
-        <label class="field-label" for="costo_mantenimiento">Costo de Mantenimiento (mensual)</label>
-        <input type="text" id="costo_mantenimiento" name="costo_mantenimiento" placeholder="$ 0.00">
-      </div>
-      <div class="field">
-        <label class="field-label" for="reserva">Reserva</label>
-        <input type="text" id="reserva" name="reserva" placeholder="$ 0.00">
-      </div>
-      <div class="field">
-        <label class="field-label" for="separacion">Separación</label>
-        <input type="text" id="separacion" name="separacion" placeholder="$ 0.00">
-      </div>
-      <div class="field">
-        <label class="field-label" for="cuotas_obra">Cuotas durante Obra</label>
-        <input type="text" id="cuotas_obra" name="cuotas_obra" placeholder="Ej: 24 cuotas de $500">
-      </div>
-      <div class="field col-span-2">
-        <label class="field-label" for="fecha_entrega">Fecha Estimada de Entrega</label>
-        <input type="date" id="fecha_entrega" name="fecha_entrega">
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>💰</span> 5. Datos de Inversión y Pagos</div>
+      <div class="accordion-icon">▼</div>
+    </div>
+    <div class="section-content">
+      <div class="grid grid-2" style="margin-top: 16px;">
+        <div class="field">
+          <label class="field-label" for="costo_mantenimiento">Costo de Mantenimiento (mensual)</label>
+          <input type="text" id="costo_mantenimiento" name="costo_mantenimiento" placeholder="$ 0.00">
+        </div>
+        <div class="field">
+          <label class="field-label" for="reserva">Reserva</label>
+          <input type="text" id="reserva" name="reserva" placeholder="$ 0.00">
+        </div>
+        <div class="field">
+          <label class="field-label" for="separacion">Separación</label>
+          <input type="text" id="separacion" name="separacion" placeholder="$ 0.00">
+        </div>
+        <div class="field">
+          <label class="field-label" for="cuotas_obra">Cuotas durante Obra</label>
+          <input type="text" id="cuotas_obra" name="cuotas_obra" placeholder="Ej: 24 cuotas de $500">
+        </div>
+        <div class="field col-span-2">
+          <label class="field-label" for="fecha_entrega">Fecha Estimada de Entrega</label>
+          <input type="date" id="fecha_entrega" name="fecha_entrega">
+        </div>
       </div>
     </div>
   </div>
 
   <!-- 6. TEXTO DESCRIPTIVO -->
   <div class="section">
-    <div class="section-title"><span>✍️</span> 6. Texto Descriptivo (para la Web)</div>
-    <div class="field">
-      <label class="field-label" for="descripcion_web">Gancho Comercial / Descripción</label>
-      <textarea id="descripcion_web" name="descripcion_web" placeholder="Escribe aquí la descripción atractiva de la propiedad para publicar en la web o redes sociales..."></textarea>
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>✍️</span> 6. Texto Descriptivo (para la Web)</div>
+      <div class="accordion-icon">▼</div>
+    </div>
+    <div class="section-content" style="padding-top: 16px;">
+      <div class="field">
+        <label class="field-label" for="descripcion_web">Gancho Comercial / Descripción</label>
+        <textarea id="descripcion_web" name="descripcion_web" placeholder="Escribe aquí la descripción atractiva de la propiedad para publicar en la web o redes sociales..."></textarea>
+      </div>
     </div>
   </div>
 
   <!-- 7. CONTROL INTERNO -->
   <div class="section">
-    <div class="section-title"><span>📁</span> 7. Control Interno — Documentos</div>
-    <div class="doc-list" data-group="documentos">
-      <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Título de Propiedad"><div class="doc-box"></div> Título de Propiedad
-      </label>
-      <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="IPI al Día"><div class="doc-box"></div> IPI al Día
-      </label>
-      <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Planos"><div class="doc-box"></div> Planos
-      </label>
-      <label class="doc-item" onclick="toggleDoc(this)">
-        <input type="checkbox" name="documentos" value="Régimen de Condominio"><div class="doc-box"></div> Régimen de Condominio
-      </label>
-      <label class="doc-item na-item" onclick="toggleDocNa(this)">
-        <input type="checkbox" name="documentos" value="N/A"><div class="doc-box"></div> N/A
-      </label>
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>📁</span> 7. Control Interno — Documentos</div>
+      <div class="accordion-icon">▼</div>
     </div>
-    <div class="field" style="margin-top:12px;">
-      <label class="field-label" for="notas_internas">Notas Internas</label>
-      <textarea id="notas_internas" name="notas_internas" placeholder="Observaciones, pendientes o notas para el equipo..."></textarea>
+    <div class="section-content" style="padding-top: 16px;">
+      <div class="doc-list" data-group="documentos">
+        <label class="doc-item" onclick="toggleDoc(this)">
+          <input type="checkbox" name="documentos" value="Título de Propiedad"><div class="doc-box"></div> Título de Propiedad
+        </label>
+        <label class="doc-item" onclick="toggleDoc(this)">
+          <input type="checkbox" name="documentos" value="IPI al Día"><div class="doc-box"></div> IPI al Día
+        </label>
+        <label class="doc-item" onclick="toggleDoc(this)">
+          <input type="checkbox" name="documentos" value="Planos"><div class="doc-box"></div> Planos
+        </label>
+        <label class="doc-item" onclick="toggleDoc(this)">
+          <input type="checkbox" name="documentos" value="Régimen de Condominio"><div class="doc-box"></div> Régimen de Condominio
+        </label>
+        <label class="doc-item na-item" onclick="toggleDocNa(this)">
+          <input type="checkbox" name="documentos" value="N/A"><div class="doc-box"></div> N/A
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. NOTAS INTERNAS -->
+  <div class="section" id="print-notas-internas-section">
+    <div class="section-title" onclick="toggleSection(this)">
+      <div class="section-title-left"><span>📝</span> 8. Notas Internas</div>
+      <div class="accordion-icon">▼</div>
+    </div>
+    <div class="section-content" style="padding-top: 16px;">
+      <p style="font-size: 13px; color: #5a6a7a; margin-bottom: 12px;">Haz clic en el botón para escribir observaciones o notas para el equipo de ventas en una ventana más cómoda.</p>
+      
+      <button type="button" class="btn btn-outline" onclick="openNotasModal()">
+        <span style="font-size: 16px;">✏️</span> Escribir Notas Internas
+      </button>
+      
+      <!-- Preview Text -->
+      <div id="notas_preview" style="margin-top:14px; font-size:13px; white-space: pre-wrap; background: #f7f9fc; padding: 14px; border-radius: 6px; border: 1px solid #e0eaf4; min-height: 60px; color: #222;">Ninguna nota escrita aún...</div>
+      
+      <!-- Hidden input to collect data easily -->
+      <textarea id="notas_internas" name="notas_internas" style="display:none;"></textarea>
     </div>
   </div>
 
@@ -792,6 +962,23 @@
     <strong>Nuevo Sol Inversiones</strong> · Formulario de Captación de Propiedad · Uso Interno
   </div>
 
+</div>
+
+<!-- MODAL NOTAS INTERNAS -->
+<div class="modal-overlay" id="notasModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span>📝 Notas Internas</span>
+      <button class="close-btn" onclick="closeNotasModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <textarea id="notas_modal_textarea" placeholder="Escribe observaciones, pendientes o notas para el equipo de ventas aquí..."></textarea>
+      <div style="text-align: right; margin-top: 16px;">
+        <button type="button" class="btn btn-outline" onclick="closeNotasModal()" style="margin-right: 8px;">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="saveNotasModal()">Guardar Notas</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -840,10 +1027,38 @@
     document.getElementById('configBanner').style.display = 'none';
   }
 
-  // Si ya existe la URL en localStorage, ocultar el banner
   if (GOOGLE_SHEETS_URL) {
     document.getElementById('sheetsUrlInput').value = GOOGLE_SHEETS_URL;
     document.getElementById('configBanner').style.display = 'none';
+  }
+
+  // ============================
+  // ACCORDION (SECCIONES)
+  // ============================
+  function toggleSection(el) {
+    const content = el.nextElementSibling;
+    el.classList.toggle('collapsed');
+    content.classList.toggle('collapsed');
+  }
+
+  // ============================
+  // MODAL NOTAS INTERNAS
+  // ============================
+  function openNotasModal() {
+    document.getElementById('notas_modal_textarea').value = document.getElementById('notas_internas').value;
+    document.getElementById('notasModalOverlay').classList.add('active');
+    document.getElementById('notas_modal_textarea').focus();
+  }
+  
+  function closeNotasModal() {
+    document.getElementById('notasModalOverlay').classList.remove('active');
+  }
+  
+  function saveNotasModal() {
+    const text = document.getElementById('notas_modal_textarea').value;
+    document.getElementById('notas_internas').value = text;
+    document.getElementById('notas_preview').textContent = text.trim() ? text : 'Ninguna nota escrita aún...';
+    closeNotasModal();
   }
 
   // ============================
@@ -853,7 +1068,6 @@
     const cb = el.querySelector('input[type="checkbox"]');
     const isNa = el.classList.contains('na-item');
 
-    // If clicking a regular item, uncheck N/A in same group
     if (!isNa) {
       const group = el.closest('[data-group]');
       if (group) {
@@ -869,15 +1083,11 @@
     el.classList.toggle('checked', cb.checked);
   }
 
-  // ============================
-  // N/A CHECKBOX TOGGLE
-  // ============================
   function toggleNa(el, groupName) {
     const cb = el.querySelector('input[type="checkbox"]');
     cb.checked = !cb.checked;
     el.classList.toggle('checked', cb.checked);
 
-    // If N/A is now checked, uncheck all others in group
     if (cb.checked) {
       const group = el.closest('[data-group]');
       if (group) {
@@ -889,13 +1099,9 @@
     }
   }
 
-  // ============================
-  // DOC CHECKBOX TOGGLE
-  // ============================
   function toggleDoc(el) {
     const cb = el.querySelector('input[type="checkbox"]');
 
-    // Uncheck N/A in docs
     const group = el.closest('[data-group]');
     if (group) {
       const naItem = group.querySelector('.na-item');
@@ -914,7 +1120,6 @@
     cb.checked = !cb.checked;
     el.classList.toggle('checked', cb.checked);
 
-    // If N/A is checked, uncheck all other docs
     if (cb.checked) {
       const group = el.closest('[data-group]');
       if (group) {
@@ -933,10 +1138,8 @@
     const group = el.parentElement;
     const radio = el.querySelector('input[type="radio"]');
     
-    // Remove selected from all
     group.querySelectorAll('.estado-item').forEach(i => i.classList.remove('selected'));
     
-    // Select this one
     el.classList.add('selected');
     radio.checked = true;
   }
@@ -947,25 +1150,22 @@
   function resetForm() {
     if (!confirm('¿Seguro que deseas limpiar todo el formulario?')) return;
     
-    // Clear text/number/date inputs and textareas
     document.querySelectorAll('#propertyForm input[type="text"], #propertyForm input[type="number"], #propertyForm input[type="date"], #propertyForm textarea').forEach(i => i.value = '');
-    
-    // Reset select to first option
     document.querySelectorAll('#propertyForm select').forEach(s => s.selectedIndex = 0);
     
-    // Uncheck all checkboxes
     document.querySelectorAll('.check-item, .doc-item').forEach(i => {
       i.classList.remove('checked');
       const cb = i.querySelector('input[type="checkbox"]');
       if (cb) cb.checked = false;
     });
     
-    // Uncheck all radios
     document.querySelectorAll('.estado-item').forEach(i => {
       i.classList.remove('selected');
       const radio = i.querySelector('input[type="radio"]');
       if (radio) radio.checked = false;
     });
+    
+    document.getElementById('notas_preview').textContent = 'Ninguna nota escrita aún...';
     
     limpiarReferencia();
     showToast('Formulario limpiado correctamente', 'info');
@@ -977,12 +1177,12 @@
   function collectFormData() {
     const data = {};
 
-    // Simple text/number/date fields
     const simpleFields = [
       'titulo_propiedad', 'referencia_id', 'precio_venta', 'sector', 'ciudad',
       'metros_construccion', 'metros_terreno', 'nivel_piso', 'habitaciones', 'banos',
       'parqueos_cantidad', 'terminaciones', 'costo_mantenimiento', 'reserva',
-      'separacion', 'cuotas_obra', 'fecha_entrega', 'descripcion_web', 'notas_internas'
+      'separacion', 'cuotas_obra', 'fecha_entrega', 'descripcion_web', 'notas_internas',
+      'cuarto_servicio', 'medios_banos', 'cantidad_jacuzzi'
     ];
 
     simpleFields.forEach(name => {
@@ -990,17 +1190,14 @@
       data[name] = el ? el.value.trim() : '';
     });
 
-    // Moneda select
     data.moneda = document.getElementById('moneda').value;
 
-    // Radio groups
-    const radioGroups = ['estado_propiedad', 'medio_bano'];
+    const radioGroups = ['estado_propiedad'];
     radioGroups.forEach(name => {
       const checked = document.querySelector(`input[name="${name}"]:checked`);
       data[name] = checked ? checked.value : '';
     });
 
-    // Checkbox groups
     const checkGroups = ['tipo_parqueos', 'espacios_incluidos', 'areas_sociales', 'servicios_edificio', 'documentos'];
     checkGroups.forEach(name => {
       const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
@@ -1025,7 +1222,6 @@
     btn.classList.add('loading');
     btn.disabled = true;
 
-    // Generar la referencia justo antes de guardar si aún no tiene una
     if (document.getElementById('referencia_id').value === 'Se asignará al guardar') {
       generarReferencia();
     }
@@ -1040,10 +1236,8 @@
         body: JSON.stringify(data)
       });
 
-      // With no-cors we can't read the response, but if fetch doesn't throw, it was sent
       showToast('✅ Propiedad guardada exitosamente en Google Sheets', 'success');
       
-      // Ask if they want to clear the form
       setTimeout(() => {
         if (confirm('¿Deseas limpiar el formulario para registrar otra propiedad?')) {
           resetFormSilent();
@@ -1059,7 +1253,6 @@
     }
   }
 
-  // Silent reset (no confirmation)
   function resetFormSilent() {
     document.querySelectorAll('#propertyForm input[type="text"], #propertyForm input[type="number"], #propertyForm input[type="date"], #propertyForm textarea').forEach(i => i.value = '');
     document.querySelectorAll('#propertyForm select').forEach(s => s.selectedIndex = 0);
@@ -1073,6 +1266,7 @@
       const radio = i.querySelector('input[type="radio"]');
       if (radio) radio.checked = false;
     });
+    document.getElementById('notas_preview').textContent = 'Ninguna nota escrita aún...';
     limpiarReferencia();
   }
 
